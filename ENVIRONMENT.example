@@ -1,0 +1,7 @@
+# Copy this file to .env for a standalone deployment.
+# Optional analytics values may remain empty.
+VITE_ANALYTICS_ENDPOINT=
+VITE_ANALYTICS_WEBSITE_ID=
+
+NODE_ENV=production
+PORT=3000
