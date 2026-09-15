@@ -36,9 +36,9 @@ jobs:
       
         run: |
         
-          unzip -o algocracy-source.zip
+          unzip -o algocracy-source.zip -x '.github/workflows/*'
           
-          rm -f algocracy-source.zip .github/workflows/bootstrap.yml
+          rm -f algocracy-source.zip
           
       - name: Commit project files
       
