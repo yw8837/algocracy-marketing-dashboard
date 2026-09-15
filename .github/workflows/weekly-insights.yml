@@ -1,0 +1,36 @@
+name: Refresh weekly insights
+
+on:
+  schedule:
+    - cron: "0 0 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Rebuild insight data
+        run: node scripts/build-insights.mjs
+
+      - name: Commit changed insight file
+        run: |
+          if git diff --quiet -- client/public/data/insights.json; then
+            echo "No insight changes"
+            exit 0
+          fi
+          git config user.name "algocracy-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add client/public/data/insights.json
+          git commit -m "chore: refresh weekly marketing insights"
+          git push
